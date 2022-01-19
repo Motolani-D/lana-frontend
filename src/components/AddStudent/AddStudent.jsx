@@ -3,6 +3,7 @@ import './AddStudent.css';
 import axios from "axios";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {axiosInstance} from "../Config";
 
 class AddStudent extends Component {
   state = {
@@ -17,7 +18,7 @@ class AddStudent extends Component {
   addStudent = async e => {
     e.preventDefault();
     try {
-      const newStudent = await axios.post("/api/students/", {
+      const newStudent = await axiosInstance.post("/api/students/", {
           name: this.refs.name.value,
           email: this.refs.email.value,
           enrollnumber: this.refs.enrollnumber.value

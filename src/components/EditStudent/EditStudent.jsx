@@ -3,6 +3,7 @@ import './EditStudent.css';
 import axios from "axios";
 import { withRouter } from 'react-router'
 import {toast, ToastContainer} from "react-toastify";
+import {axiosInstance} from "../Config";
 
 class EditStudent extends Component {
   state = {
@@ -19,7 +20,7 @@ class EditStudent extends Component {
     try {
     let search =  this.props.location.search,
       id = search.substring(1, search.length);
-    const updateStudent = await axios(`/api/students/${id}`);
+    const updateStudent = await axiosInstance.put(`/api/students/${id}`);
     const { name, email, enrollnumber } = updateStudent.data.student;
     this.setState({ id, name, email, enrollnumber  });
     } catch (err) {
@@ -30,7 +31,7 @@ class EditStudent extends Component {
   updateStudentHandler = async (e) => {
     e.preventDefault();
     try {
-      const student = await axios.put(`/api/students/${this.state.id}`, {
+      const student = await axiosInstance.put(`/api/students/${this.state.id}`, {
         name: this.refs.name.value,
         email: this.refs.email.value,
         enrollnumber: this.refs.enrollnumber.value

@@ -5,6 +5,7 @@ import { PropagateLoader } from 'react-spinners';
 // Components
 import Student from "../../components/Student/Student";
 import SearchStudents from "../../components/SearchStudent/SearchStudents";
+import {axiosInstance} from "../../components/Config";
 
 class Home extends Component {
   state = {
@@ -15,7 +16,7 @@ class Home extends Component {
 
   async componentDidMount() {
     try {
-      const students = await axios("/api/students/");
+      const students = await axiosInstance.get("/api/students/");
       this.setState({ data: students.data });
     } catch (err) {
       this.setState({ error: err.message });
@@ -24,8 +25,8 @@ class Home extends Component {
 
   removeStudent = async id => {
     try {
-      const studentRemoved = await axios.delete(`/api/students/${id}`);
-      const students = await axios("/api/students/");
+      const studentRemoved = await axiosInstance.delete(`/api/students/${id}`);
+      const students = await axiosInstance.get("/api/students/");
       this.setState({ data: students.data });
     } catch (err) {
       this.setState({ error: err.message });
